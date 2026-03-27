@@ -372,15 +372,17 @@ export default function VideoMeetComponent() {
 
   /* ── Full cleanup on unmount ── */
   useEffect(()=>{
+    const peers = peerMap.current;
+    const analyserMap = analysers.current;
     return ()=>{
       localStream.current?.getTracks().forEach(t=>t.stop());
       screenStrm.current?.getTracks().forEach(t=>t.stop());
-      for (const {pc} of Object.values(peerMap.current)) pc.close();
+      for (const {pc} of Object.values(peers)) pc.close();
       sockRef.current?.disconnect();
       clearInterval(meetTimer.current);
       clearInterval(recTimer.current);
       recogRef.current?.stop();
-      for (const {ac} of Object.values(analysers.current)) ac?.close();
+      for (const {ac} of Object.values(analyserMap)) ac?.close();
     };
   },[]);
 

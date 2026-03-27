@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useCallback } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/landing.css";
 
@@ -221,7 +221,7 @@ export default function LandingPage() {
         </div>
         <div className="lp-nav-links">
           <a href="#features" className="lp-nav-link">Features</a>
-          <a href="#" className="lp-nav-link">Pricing</a>
+          <button type="button" className="lp-nav-link lp-nav-link-btn">Pricing</button>
         </div>
         <div className="lp-nav-actions">
           <button className="lp-btn-ghost" onClick={() => navigate("/auth")}>Sign In</button>
