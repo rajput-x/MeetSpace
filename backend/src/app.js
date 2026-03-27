@@ -20,6 +20,7 @@ const server = createServer(app);
 const PORT = process.env.PORT || 8000;
 const MONGO_URI = process.env.MONGO_URI || process.env.MONGODB_URI;
 const MONGO_DB_NAME = process.env.MONGO_DB_NAME || "meetspace";
+const hasMongoPlaceholders = (uri = "") => /<db_user>|<db_password>|<cluster-name>/i.test(uri);
 
 // For same-port setup: frontend and backend on port 8000
 // Socket.IO accepts connections from same origin
@@ -76,6 +77,10 @@ const start = async () => {
     try {
         if (!MONGO_URI) {
             throw new Error("MONGO_URI (or MONGODB_URI) is missing. Add it in backend/.env or your hosting environment variables.");
+        }
+
+        if (hasMongoPlaceholders(MONGO_URI)) {
+            throw new Error("MONGO_URI still contains placeholders like <db_password>. Put your real Atlas password in backend/.env.");
         }
 
         await mongoose.connect(MONGO_URI, {
