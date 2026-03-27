@@ -18,7 +18,8 @@ const app = express();
 const server = createServer(app);
 
 const PORT = process.env.PORT || 8000;
-const MONGO_URI = process.env.MONGO_URI || "mongodb://127.0.0.1:27017/videoconf";
+const MONGO_URI = process.env.MONGO_URI || process.env.MONGODB_URI;
+const MONGO_DB_NAME = process.env.MONGO_DB_NAME || "meetspace";
 
 // For same-port setup: frontend and backend on port 8000
 // Socket.IO accepts connections from same origin
@@ -73,11 +74,23 @@ app.use((err, req, res, next) => {
 
 const start = async () => {
     try {
-        await mongoose.connect(MONGO_URI);
-        console.log(`✅ MongoDB Connected: ${mongoose.connection.host}`);
+        if (!MONGO_URI) {
+            throw new Error("MONGO_URI (or MONGODB_URI) is missing. Add it in backend/.env or your hosting environment variables.");
+        }
+
+        await mongoose.connect(MONGO_URI, {
+            dbName: MONGO_DB_NAME,
+            serverSelectionTimeoutMS: 10000,
+            autoIndex: true
+        });
+
+        console.log(`✅ MongoDB Connected: ${mongoose.connection.host}/${mongoose.connection.name}`);
     } catch (err) {
-        console.error("⚠️  MongoDB connection failed:", err.message);
-        console.error("   Set MONGO_URI in your .env file or start MongoDB locally.");
+        console.error("❌ MongoDB connection failed:", err.message);
+        console.error("   1) Check MONGO_URI credentials");
+        console.error("   2) Atlas Network Access must allow your IP (or 0.0.0.0/0 for testing)");
+        console.error("   3) Atlas DB user must have readWrite permissions");
+        process.exit(1);
     }
 
     server.listen(PORT, () => {

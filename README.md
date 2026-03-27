@@ -56,7 +56,8 @@ npm run dev
 **.env file:**
 ```
 PORT=8000
-MONGO_URI=mongodb://127.0.0.1:27017/videoconf
+MONGO_URI=mongodb+srv://<db_user>:<db_password>@<cluster-name>.mongodb.net/?retryWrites=true&w=majority&appName=MeetSpace
+MONGO_DB_NAME=meetspace
 JWT_SECRET=your_super_secret_key_change_this
 JWT_EXPIRES_IN=7d
 CLIENT_URL=http://localhost:3000
