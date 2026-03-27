@@ -141,4 +141,4 @@ VideoConfrencePlatform/
 | `typing` | Client → Server | Typing indicator |
 | `user-joined` | Server → Client | Someone joined the room |
 | `user-left` | Server → Client | Someone left the room |
-| `participant-count` | Server → Client | Current participant count | .
+| `participant-count` | Server → Client | Current participant count |
