@@ -5,9 +5,16 @@ let messages    = {};   // path → [{sender, data, ...}]
 let timeOnline  = {};   // socketId → Date
 let usernames   = {};   // socketId → name
 
-export const connectToSocket = (server) => {
+export const connectToSocket = (server, allowedOrigins = ["*"]) => {
+    const allowAllOrigins = allowedOrigins.includes("*");
+    const socketCorsOrigin = allowAllOrigins ? "*" : allowedOrigins;
+
     const io = new Server(server, {
-        cors: { origin: "*", methods: ["GET","POST"] },
+        cors: {
+            origin: socketCorsOrigin,
+            methods: ["GET", "POST"],
+            credentials: true
+        },
         pingTimeout: 60000,
         pingInterval: 25000,
     });

@@ -21,10 +21,29 @@ const PORT = process.env.PORT || 8000;
 const MONGO_URI = process.env.MONGO_URI || process.env.MONGODB_URI;
 const MONGO_DB_NAME = process.env.MONGO_DB_NAME || "meetspace";
 const hasMongoPlaceholders = (uri = "") => /<db_user>|<db_password>|<cluster-name>/i.test(uri);
+const normalizeOrigin = (value = "") => value.trim().replace(/\/+$/, "");
+
+const allowedOrigins = [
+    ...(process.env.CLIENT_URLS || "").split(",").map(normalizeOrigin).filter(Boolean),
+    ...(process.env.CLIENT_URL ? [normalizeOrigin(process.env.CLIENT_URL)] : []),
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+    "http://localhost:5173",
+    "http://127.0.0.1:5173"
+].map(normalizeOrigin).filter((value, index, arr) => arr.indexOf(value) === index);
+
+const allowAllOrigins = allowedOrigins.includes("*");
+
+const corsOriginHandler = (origin, callback) => {
+    // allow server-to-server calls and same-origin calls without Origin header
+    if (!origin) return callback(null, true);
+    if (allowAllOrigins || allowedOrigins.includes(normalizeOrigin(origin))) return callback(null, true);
+    return callback(new Error(`CORS blocked for origin: ${origin}`));
+};
 
 // For same-port setup: frontend and backend on port 8000
 // Socket.IO accepts connections from same origin
-const io = connectToSocket(server, "*");
+const io = connectToSocket(server, allowedOrigins);
 
 // Security middleware
 app.use(helmet({
@@ -32,8 +51,10 @@ app.use(helmet({
 }));
 
 app.use(cors({
-    origin: "*",
-    credentials: true
+    origin: corsOriginHandler,
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"]
 }));
 
 // Rate limiting on API only

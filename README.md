@@ -61,6 +61,7 @@ MONGO_DB_NAME=meetspace
 JWT_SECRET=your_super_secret_key_change_this
 JWT_EXPIRES_IN=7d
 CLIENT_URL=http://localhost:3000
+CLIENT_URLS=
 ```
 
 ### 2. Frontend Setup
