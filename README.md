@@ -1,8 +1,8 @@
-# 📹 MeetSpace - Video Conferencing Platform v2.0
+# 📹 MeetSpace - Video Conferencing Platform 
 
 A full-stack real-time video conferencing platform built with React, Node.js, Socket.IO, and WebRTC.
 
-## ✨ What's New in v2.0
+## ✨ What's New 
 
 ### Security Upgrades
 - ✅ **JWT Authentication** — replaced insecure random token with industry-standard JWT tokens
