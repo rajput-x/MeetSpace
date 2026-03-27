@@ -1,0 +1,91 @@
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+.hist-root {
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh; background: #050816; color: #e8eaf6;
+    position: relative; overflow-x: hidden;
+}
+.hist-bg { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
+.hist-blob { position: absolute; border-radius: 50%; filter: blur(90px); opacity: 0.1; }
+.hist-blob-1 { width: 500px; height: 500px; background: #6c63ff; top: -100px; right: -80px; }
+.hist-blob-2 { width: 400px; height: 400px; background: #00d2ff; bottom: -80px; left: -60px; }
+
+.hist-nav {
+    position: relative; z-index: 10;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.2rem 3rem;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    backdrop-filter: blur(20px);
+}
+.hist-back {
+    background: none; border: 1px solid rgba(255,255,255,0.12);
+    color: #8892b0; padding: 0.4rem 1rem; border-radius: 8px;
+    cursor: pointer; font-size: 0.88rem; font-family: 'DM Sans', sans-serif;
+    transition: all 0.2s;
+}
+.hist-back:hover { color: #fff; border-color: rgba(255,255,255,0.3); }
+.hist-nav-title {
+    font-family: 'Sora', sans-serif; font-weight: 700; font-size: 1.1rem; color: #fff;
+}
+
+.hist-main {
+    position: relative; z-index: 5;
+    display: flex; justify-content: center; padding: 3rem 2rem;
+}
+
+.hist-loading {
+    display: flex; flex-direction: column; align-items: center; gap: 1rem;
+    color: #8892b0; margin-top: 4rem;
+}
+.hist-spinner {
+    width: 32px; height: 32px;
+    border: 3px solid rgba(108,99,255,0.2);
+    border-top-color: #6c63ff;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.hist-empty {
+    text-align: center; max-width: 360px; margin-top: 4rem;
+    display: flex; flex-direction: column; align-items: center; gap: 0.8rem;
+}
+.hist-empty-icon { font-size: 3rem; margin-bottom: 0.5rem; }
+.hist-empty h3 { font-family: 'Sora', sans-serif; font-size: 1.3rem; color: #fff; }
+.hist-empty p { color: #8892b0; font-size: 0.9rem; line-height: 1.5; }
+.hist-cta {
+    margin-top: 1rem;
+    background: linear-gradient(135deg, #6c63ff, #00d2ff);
+    border: none; color: #fff; padding: 0.7rem 1.5rem;
+    border-radius: 10px; cursor: pointer;
+    font-size: 0.9rem; font-family: 'DM Sans', sans-serif; font-weight: 600;
+    transition: opacity 0.2s;
+}
+.hist-cta:hover { opacity: 0.9; }
+
+.hist-list { width: 100%; max-width: 560px; }
+.hist-count { color: #8892b0; font-size: 0.85rem; margin-bottom: 1rem; }
+
+.hist-card {
+    display: flex; justify-content: space-between; align-items: center;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 14px; padding: 1rem 1.2rem;
+    margin-bottom: 10px;
+    transition: border-color 0.2s, transform 0.2s;
+}
+.hist-card:hover { border-color: rgba(108,99,255,0.3); transform: translateX(4px); }
+.hist-card-left { display: flex; align-items: center; gap: 12px; }
+.hist-card-icon { font-size: 1.5rem; }
+.hist-code { font-weight: 600; color: #fff; letter-spacing: 0.04em; font-size: 0.95rem; }
+.hist-date { color: #8892b0; font-size: 0.8rem; margin-top: 2px; }
+
+.hist-rejoin {
+    background: rgba(108,99,255,0.15); border: 1px solid rgba(108,99,255,0.3);
+    color: #a89cff; padding: 0.4rem 1rem; border-radius: 8px;
+    cursor: pointer; font-size: 0.85rem; font-family: 'DM Sans', sans-serif; font-weight: 500;
+    transition: all 0.2s; white-space: nowrap;
+}
+.hist-rejoin:hover { background: rgba(108,99,255,0.3); color: #fff; }
